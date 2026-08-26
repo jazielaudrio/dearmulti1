@@ -1,0 +1,206 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-cosmic-bg: #0a0a1a;
+  --color-cosmic-card: #12122a;
+  --color-sunset-bg: #1a0a0a;
+  --color-sunset-card: #2a1215;
+  --color-ocean-bg: #0a0a1a;
+  --color-ocean-card: #0d1b2a;
+  --color-forest-bg: #0a1a0a;
+  --color-forest-card: #122a15;
+  --color-dark-bg: #0a0a0a;
+  --color-dark-card: #1a1a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Splash screen animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-12px) rotate(2deg); }
+  66% { transform: translateY(-6px) rotate(-1deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(167, 139, 250, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(167, 139, 250, 0.6); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes letter-reveal {
+  0% { opacity: 0; transform: translateY(20px) rotateX(-40deg); }
+  100% { opacity: 1; transform: translateY(0) rotateX(0deg); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
+}
+
+.animate-sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s ease-out forwards;
+}
+
+/* Staggered delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+.delay-800 { animation-delay: 800ms; }
+
+/* Message styles */
+.message-elegant {
+  font-family: "Georgia", serif;
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+}
+
+.message-warm {
+  font-family: "Segoe UI", sans-serif;
+  line-height: 1.7;
+}
+
+.message-playful {
+  font-family: "Comic Sans MS", "Segoe UI", sans-serif;
+  line-height: 1.8;
+}
+
+.message-minimal {
+  font-family: "SF Mono", "Fira Code", monospace;
+  line-height: 1.9;
+  letter-spacing: 0.05em;
+}
+
+/* Glass morphism */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Passcode input */
+.passcode-input {
+  font-size: 1.5rem;
+  letter-spacing: 1rem;
+  text-align: center;
+}
+
+.passcode-input::placeholder {
+  letter-spacing: 0.5rem;
+  font-size: 1rem;
+}
+
+/* Theme backgrounds */
+.bg-cosmic {
+  background: radial-gradient(ellipse at 20% 50%, #1a0533 0%, #0a0a1a 50%, #050510 100%);
+}
+
+.bg-sunset {
+  background: radial-gradient(ellipse at 20% 50%, #331a0a 0%, #1a0a0a 50%, #100505 100%);
+}
+
+.bg-ocean {
+  background: radial-gradient(ellipse at 20% 50%, #0a1a33 0%, #0a0a1a 50%, #050510 100%);
+}
+
+.bg-forest {
+  background: radial-gradient(ellipse at 20% 50%, #0a331a 0%, #0a1a0a 50%, #051005 100%);
+}
+
+.bg-dark {
+  background: radial-gradient(ellipse at 20% 50%, #1a1a1a 0%, #0a0a0a 50%, #050505 100%);
+}
