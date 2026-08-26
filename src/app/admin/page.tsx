@@ -79,6 +79,38 @@ export default function AdminPage() {
     reader.readAsDataURL(file);
   };
 
+  const handleExportJSON = () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(config, null, 2));
+    const downloadAnchor = document.createElement("a");
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", `message-app-config-${Date.now()}.json`);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+  };
+
+  const handleImportJSON = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const parsed = JSON.parse(event.target?.result as string);
+        if (parsed && typeof parsed === "object" && Array.isArray(parsed.friends)) {
+          setConfig(parsed);
+          saveConfig(parsed);
+          alert("Configuration imported successfully!");
+        } else {
+          alert("Invalid configuration file structure.");
+        }
+      } catch {
+        alert("Failed to parse JSON file.");
+      }
+    };
+    reader.readAsText(file);
+  };
+
   const addFriend = () => {
     if (config.friends.length >= 6) return;
     const newFriend: Friend = {
@@ -291,6 +323,30 @@ export default function AdminPage() {
                       ))}
                     </div>
                   </Field>
+                </Section>
+
+                <Section title="Backup & Transfer (Export / Import)">
+                  <p className="text-violet-300/60 text-xs mb-3">
+                    Export your custom messages, passcodes, and uploaded pictures as a JSON file to transfer to another device or backup.
+                  </p>
+                  <div className="flex gap-3 flex-wrap">
+                    <button
+                      onClick={handleExportJSON}
+                      className="px-4 py-2 rounded-xl text-sm font-medium text-white/90 bg-violet-500/20 border border-violet-500/30 hover:bg-violet-500/30 transition-all duration-300 cursor-pointer flex items-center gap-2"
+                    >
+                      <span>📥</span> Export Configuration (.json)
+                    </button>
+
+                    <label className="px-4 py-2 rounded-xl text-sm font-medium text-white/90 bg-violet-500/20 border border-violet-500/30 hover:bg-violet-500/30 transition-all duration-300 cursor-pointer flex items-center gap-2">
+                      <span>📤</span> Import Configuration (.json)
+                      <input
+                        type="file"
+                        accept="application/json,.json"
+                        className="hidden"
+                        onChange={handleImportJSON}
+                      />
+                    </label>
+                  </div>
                 </Section>
 
                 <Section title="Danger Zone">

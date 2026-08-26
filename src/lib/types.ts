@@ -30,10 +30,10 @@ export interface AppConfig {
 export const DEFAULT_FRIENDS: Friend[] = [
   {
     id: "friend-1",
-    name: "Friend 1",
+    name: "Sisil",
     emoji: "🌸",
     passcode: "1234",
-    message: "You are amazing and I'm so grateful to have you in my life!",
+    message: "Hi Sisil, The first time kita ketemu jujur pas lu muncul dari semak semak pas kita first gathering dan gua udah tau ni orang pasti unik haha. I really appreciate the way lu selalu step up buat kita dan menjadi sosok yang mau ngelead dan ngeprotect kita in a way dan juga selalu jadi moodbooster kita on an everyday basis. For more personal stuff, makasih ya udah mau ngenerima gua apa adanya sebagai temen lu, gua seneng lu gapernah ngejudge gua sama sekali apapun itu dan selalu menjadi orang yang understanding. Makasih juga udah manggil gua \"nang\" karena ever since my mom passed away nobody really calls me that anymore and it just make me feel happy and at home. Tetap jadi diri lu sendiri ya!",
     messageStyle: "elegant",
   },
   {
