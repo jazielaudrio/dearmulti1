@@ -46,6 +46,12 @@ export default function AdminPage() {
 
   useEffect(() => {
     setConfig(getConfig());
+
+    const handleStorage = () => {
+      setConfig(getConfig());
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
   }, []);
 
   const handleSave = () => {
