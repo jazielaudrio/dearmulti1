@@ -61,13 +61,24 @@ export async function saveConfig(config: AppConfig): Promise<void> {
   
   if (supabase) {
     try {
+      console.log("Attempting to save to Supabase...");
       const { error } = await supabase
         .from("app_config")
         .upsert({ id: "main", config: config, updated_at: new Date().toISOString() });
-      if (error) console.warn("Supabase save error:", error.message);
-    } catch (e) {
-      console.warn("Supabase save failed:", e);
+      if (error) {
+        console.error("Supabase save error:", error.message);
+        alert("Gagal menyimpan ke Supabase: " + error.message);
+      } else {
+        console.log("Successfully saved to Supabase!");
+        alert("Sukses! Data berhasil tersimpan ke Database Supabase.");
+      }
+    } catch (e: any) {
+      console.error("Supabase save failed:", e);
+      alert("Error sistem saat menyimpan ke Supabase: " + e.message);
     }
+  } else {
+    console.log("Supabase client is null. Missing environment variables.");
+    alert("Peringatan: Kunci Supabase belum terbaca di Vercel. Variabel lingkungan kosong!");
   }
 }
 
