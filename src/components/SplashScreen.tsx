@@ -33,9 +33,9 @@ export default function SplashScreen({ onComplete, title, subtitle }: SplashScre
     <AnimatePresence>
       {visible && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-cosmic overflow-hidden"
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.8 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 overflow-hidden"
+          exit={{ opacity: 0, scale: 1.1, filter: "blur(20px)" }}
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
         >
           {/* Floating particles */}
           {Array.from({ length: 30 }).map((_, i) => (
@@ -50,12 +50,12 @@ export default function SplashScreen({ onComplete, title, subtitle }: SplashScre
                 background: `rgba(167, 139, 250, ${Math.random() * 0.5 + 0.2})`,
               }}
               animate={{
-                y: [0, -30, 0],
-                opacity: [0.2, 0.8, 0.2],
-                scale: [1, 1.3, 1],
+                y: [0, -40, 0],
+                opacity: [0.1, 0.6, 0.1],
+                scale: [1, 1.5, 1],
               }}
               transition={{
-                duration: Math.random() * 3 + 2,
+                duration: Math.random() * 4 + 3,
                 repeat: Infinity,
                 delay: Math.random() * 2,
                 ease: "easeInOut",
@@ -65,15 +65,15 @@ export default function SplashScreen({ onComplete, title, subtitle }: SplashScre
 
           {/* Glow orb */}
           <motion.div
-            className="absolute w-64 h-64 rounded-full"
+            className="absolute w-72 h-72 rounded-full"
             style={{
-              background: "radial-gradient(circle, rgba(167,139,250,0.3) 0%, transparent 70%)",
+              background: "radial-gradient(circle, rgba(167,139,250,0.15) 0%, transparent 70%)",
             }}
             animate={{
-              scale: [1, 1.5, 1],
-              opacity: [0.3, 0.6, 0.3],
+              scale: [1, 1.8, 1],
+              opacity: [0.3, 0.7, 0.3],
             }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           />
 
           {/* Main content */}
@@ -85,18 +85,18 @@ export default function SplashScreen({ onComplete, title, subtitle }: SplashScre
                   key={i}
                   className="text-4xl md:text-6xl lg:text-7xl font-light text-white"
                   style={{
-                    textShadow: "0 0 40px rgba(167,139,250,0.5)",
+                    textShadow: "0 0 30px rgba(167,139,250,0.4)",
                   }}
-                  initial={{ opacity: 0, y: 30, rotateX: -40 }}
+                  initial={{ opacity: 0, y: 40, filter: "blur(12px)", scale: 0.9 }}
                   animate={
                     showTitle
-                      ? { opacity: 1, y: 0, rotateX: 0 }
+                      ? { opacity: 1, y: 0, filter: "blur(0px)", scale: 1 }
                       : {}
                   }
                   transition={{
-                    delay: i * 0.2,
-                    duration: 0.8,
-                    ease: [0.215, 0.61, 0.355, 1],
+                    delay: i * 0.15,
+                    duration: 1.4,
+                    ease: [0.16, 1, 0.3, 1], // Cinematic ease-out
                   }}
                 >
                   {word}
@@ -106,40 +106,40 @@ export default function SplashScreen({ onComplete, title, subtitle }: SplashScre
 
             {/* Decorative line */}
             <motion.div
-              className="mx-auto mt-6 h-px bg-gradient-to-r from-transparent via-violet-400 to-transparent"
-              initial={{ width: 0, opacity: 0 }}
+              className="mx-auto mt-8 h-px bg-gradient-to-r from-transparent via-violet-400/50 to-transparent"
+              initial={{ width: 0, opacity: 0, filter: "blur(5px)" }}
               animate={
                 showSubtitle
-                  ? { width: 200, opacity: 1 }
+                  ? { width: 250, opacity: 1, filter: "blur(0px)" }
                   : {}
               }
-              transition={{ duration: 1, ease: "easeOut" }}
+              transition={{ duration: 1.5, ease: "easeOut" }}
             />
 
             {/* Subtitle */}
             <motion.p
-              className="mt-6 text-lg md:text-xl text-violet-300/70 font-light tracking-wider"
-              initial={{ opacity: 0, y: 10 }}
+              className="mt-6 text-lg md:text-xl text-violet-300/70 font-light tracking-widest"
+              initial={{ opacity: 0, y: 15, filter: "blur(8px)" }}
               animate={
                 showSubtitle
-                  ? { opacity: 1, y: 0 }
+                  ? { opacity: 1, y: 0, filter: "blur(0px)" }
                   : {}
               }
-              transition={{ delay: 0.3, duration: 0.8 }}
+              transition={{ delay: 0.4, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             >
               {subtitle || "tap to see your message"}
             </motion.p>
 
             {/* Arrow hint */}
             <motion.div
-              className="mt-8"
+              className="mt-10"
               initial={{ opacity: 0 }}
               animate={
                 showSubtitle
                   ? { opacity: 1 }
                   : {}
               }
-              transition={{ delay: 0.8, duration: 0.6 }}
+              transition={{ delay: 1, duration: 1 }}
             >
               <motion.div
                 animate={{ y: [0, 8, 0] }}

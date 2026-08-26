@@ -49,17 +49,17 @@ export default function Home() {
           <motion.div
             key="content"
             className="relative z-10 min-h-screen flex flex-col"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
+            initial={{ opacity: 0, scale: 0.97, filter: "blur(10px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
           >
             {/* Header */}
             <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
               <motion.div
                 className="text-center mb-12"
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
+                transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               >
                 <h1
                   className="text-3xl md:text-5xl font-light text-white mb-3"
