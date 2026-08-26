@@ -7,7 +7,12 @@ export function getConfig(): AppConfig {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored) {
-      return JSON.parse(stored);
+      const parsed = JSON.parse(stored);
+      return {
+        ...DEFAULT_CONFIG,
+        ...parsed,
+        friends: Array.isArray(parsed.friends) && parsed.friends.length > 0 ? parsed.friends : DEFAULT_CONFIG.friends,
+      };
     }
   } catch {
     // fallback
