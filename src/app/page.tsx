@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import SplashScreen from "@/components/SplashScreen";
 import ParticleBackground from "@/components/ParticleBackground";
 import FriendCard from "@/components/FriendCard";
-import { getConfig } from "@/lib/store";
+import { getConfig, fetchRemoteConfig } from "@/lib/store";
 import { AppConfig, DEFAULT_CONFIG } from "@/lib/types";
 import { THEME_STYLES } from "@/lib/themes";
 
@@ -17,6 +17,10 @@ export default function Home() {
 
   useEffect(() => {
     setConfig(getConfig());
+
+    fetchRemoteConfig().then((remote) => {
+      if (remote) setConfig(remote);
+    });
 
     const handleStorage = () => {
       setConfig(getConfig());

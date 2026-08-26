@@ -1,4 +1,5 @@
 import { AppConfig, DEFAULT_CONFIG } from "./types";
+import { supabase } from "./supabase";
 
 const STORAGE_KEY = "special-message-app-config";
 
@@ -20,9 +21,49 @@ export function getConfig(): AppConfig {
   return DEFAULT_CONFIG;
 }
 
-export function saveConfig(config: AppConfig): void {
+export async function fetchRemoteConfig(): Promise<AppConfig | null> {
+  if (!supabase) return null;
+  try {
+    const { data, error } = await supabase
+      .from("app_config")
+      .select("config")
+      .eq("id", "main")
+      .single();
+
+    if (error) {
+      console.warn("Supabase fetch notice:", error.message);
+      return null;
+    }
+
+    if (data && data.config) {
+      const remoteConfig = data.config as AppConfig;
+      saveConfigLocalOnly(remoteConfig);
+      return remoteConfig;
+    }
+  } catch (e) {
+    console.warn("Supabase fetch failed:", e);
+  }
+  return null;
+}
+
+export function saveConfigLocalOnly(config: AppConfig): void {
   if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+}
+
+export async function saveConfig(config: AppConfig): Promise<void> {
+  saveConfigLocalOnly(config);
+  
+  if (supabase) {
+    try {
+      const { error } = await supabase
+        .from("app_config")
+        .upsert({ id: "main", config: config, updated_at: new Date().toISOString() });
+      if (error) console.warn("Supabase save error:", error.message);
+    } catch (e) {
+      console.warn("Supabase save failed:", e);
+    }
+  }
 }
 
 export function resetConfig(): void {
