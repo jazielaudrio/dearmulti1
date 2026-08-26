@@ -28,7 +28,7 @@ export async function fetchRemoteConfig(): Promise<AppConfig | null> {
       .from("app_config")
       .select("config")
       .eq("id", "main")
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.warn("Supabase fetch notice:", error.message);
@@ -39,6 +39,11 @@ export async function fetchRemoteConfig(): Promise<AppConfig | null> {
       const remoteConfig = data.config as AppConfig;
       saveConfigLocalOnly(remoteConfig);
       return remoteConfig;
+    } else {
+      // Database table exists but has no data -> Auto-seed DEFAULT_CONFIG to Supabase!
+      console.log("Seeding DEFAULT_CONFIG into Supabase database...");
+      await saveConfig(DEFAULT_CONFIG);
+      return DEFAULT_CONFIG;
     }
   } catch (e) {
     console.warn("Supabase fetch failed:", e);
